@@ -26,7 +26,7 @@ End the lawless era of Jinja.
 
     ```python
     from jinja2 import Environment, FileSystemLoader
-    from your_package_name import NeverUndefined
+    from jinja2_neverundefined import NeverUndefined
 
     # Create Jinja2 environment with the extension
     env = Environment(
