@@ -45,7 +45,7 @@ End the lawless era of Jinja.
 4. Run the script:
 
     ```bash
-    python example.py
+    python3 example.py
     ```
 
 The script will raise an exception because parameters `a b c` are not provided when calling macro `test` in the template.
