@@ -50,4 +50,41 @@ End the lawless era of Jinja.
 
 The script will raise an exception because parameters `a b c` are not provided when calling macro `test` in the template.
 
+Take another example:
+
+```jinja
+{% macro mtest(a, b, c) %}
+append undefined parameters to list
+{% set s = [] %}
+{% do s.append(a) %}
+{{ s }}
+{% endmacro %}
+{{ mtest() }}
+```
+
+`StrictUndefined` will not throw error. It will produce:
+
+```
+append undefined parameters to list
+[Undefined]
+```
+
+However, `NeverUndefined` will:
+
+```
+  File "template.j2", line 9, in top-level template code
+    {{ mtest() }}
+      └ <Macro 'mtest'>
+  File "/usr/local/lib/python3.9/dist-packages/jinja2/runtime.py", line 777, in _invoke
+    rv = self._func(*arguments)
+         │           └ [missing, missing, missing]
+         └ <Macro 'mtest'>
+  File "template.j2", line 2, in template
+    {% macro mtest(a, b, c) %}
+  File "/usr/local/lib/python3.9/dist-packages/jinja2_neverundefined/__init__.py", line 14, in __init__
+    raise Exception(info)
+                    └ "parameter 'a' was not provided"
+Exception: parameter 'a' was not provided
+```
+
 By using the `NeverUndefined` extension, the Jinja environment will raise an exception when encountering an undefined variable. This helps catch potential issues or missing variable bindings in your templates.
